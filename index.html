@@ -1,14 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=
-    , initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Helo world</h1>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. A sapiente neque impedit ipsum, ducimus soluta voluptate. Modi nihil sequi officia neque! Dolor aspernatur nemo perspiciatis! Eum tenetur dolor incidunt ea!
-    <img src="./open/dog.jpg" alt="">
-</body>
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { 
+          width: 500px;
+          background: lightsalmon;
+          border-radius: 20px 0px 0px 20px;
+          padding: 5px 5px;
+      }
+      .i-sent {
+          background: skyblue !important;
+          border-radius: 0px 20px 20px 0px !important;
+          float: left;
+      }
+      .clear-both {
+          clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
+  
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    $(function () {
+        var socket = io();
+        $('form').submit(function(e){
+            var msg = $('#m').val();
+            e.preventDefault(); // prevents page reloading
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            $('#messages').append($('<li class="i-sent">').text(msg));
+            $('#messages').append($('<div class="clear-both"></div'));
+            return false;
+        });
+
+        socket.on('server_reply', function(msg){
+            $('#messages').append($('<li style="float:right">').text(msg));
+            $('#messages').append($('<div class="clear-both"></div'));
+        })
+    });
+    </script>
 </html>
