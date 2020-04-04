@@ -1,23 +1,26 @@
+var app = require('express')();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+var port = process.env.PORT || 3000
 
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 8888
-const duongDan = require('path')
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/chat.html');
+});
 
-app.use('/open', express.static(duongDan.join(__dirname, 'public')))
-app.get('/', (req, res) => { 
-    res.send('Hello World!')
-})
+io.on('connection', function(socket){
+  console.log('a user connected');
+  // when client disconnected, shut down chrom
+  socket.on('disconnect', function(){
+      console.log("user disconnected");
+  });
 
-app.get('/home', (req, res) => { 
-    res.send('Home Page')
-})
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
 
+    socket.broadcast.emit('server_reply', msg)
+  });
+});
 
-app.get('/login', (req, res) => { 
-    res.sendFile(duongDan.join(__dirname, 'index.html'))
-})
-
-app.listen(port, () => { 
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+http.listen(3000, function(){
+  console.log('listening on *:' + port);
+});
