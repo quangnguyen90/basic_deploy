@@ -43,13 +43,13 @@
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
             $('#messages').append($('<li class="i-sent">').text(msg));
-            $('#messages').append($('<div class="clear-both"></div'));
+            $('#messages').append('<div class="clear-both"></div');
             return false;
         });
 
         socket.on('server_reply', function(msg){
             $('#messages').append($('<li style="float:right">').text(msg));
-            $('#messages').append($('<div class="clear-both"></div'));
+            $('#messages').append('<div class="clear-both"></div');
         })
     });
     </script>

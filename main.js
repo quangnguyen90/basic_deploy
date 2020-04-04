@@ -16,7 +16,6 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
-
     socket.broadcast.emit('server_reply', msg);
   });
 });
@@ -24,4 +23,4 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:' + port);
 });
-//Deployed page on heroku: https://basicdeploy.herokuapp.com
+//Deployed page on heroku: https://quangchat90.herokuapp.com
