@@ -9,7 +9,7 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  // when client disconnected, shut down chrom
+  // when client disconnected, shut down chrome
   socket.on('disconnect', function(){
       console.log("user disconnected");
   });
@@ -17,7 +17,7 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
 
-    socket.broadcast.emit('server_reply', msg)
+    socket.broadcast.emit('server_reply', msg);
   });
 });
 
