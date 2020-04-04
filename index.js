@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3333;
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -20,7 +20,7 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
+http.listen(port, function(){
   console.log('listening on *:' + port);
 });
 //Deployed page on heroku: https://quangchat90.herokuapp.com
