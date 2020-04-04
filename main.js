@@ -1,7 +1,7 @@
 
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 8888
 const duongDan = require('path')
 
 app.use('/open', express.static(duongDan.join(__dirname, 'public')))
